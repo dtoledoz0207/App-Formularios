@@ -1,7 +1,7 @@
 <h4>Formularios <small>template</small></h4>
 <hr>
 
-<form>
+<form (ngSubmit)="guardar(forma)" #forma="ngForm">
   <div>
 
     <div class="row form-group">
@@ -9,7 +9,20 @@
       <div class="col-8">
         <input class="form-control"
                 type="text"
-                placeholder="Nombre">
+                placeholder="Nombre"
+                name="nombre"
+                [(ngModel)]="usuario.nombre"
+                required
+                minlength="3"
+                #nombre="ngModel">
+
+        <div *ngIf="nombre.errors?.required">
+          Este campo es requerido.
+        </div>
+        <div *ngIf="nombre.errors?.minlength">
+          Por lo menos {{nombre.errors.minlength.requiredLength}} caracteres.
+        </div>
+
       </div>
     </div>
 
@@ -19,7 +32,16 @@
 
         <input class="form-control"
                 type="text"
-                placeholder="Apellido">
+                placeholder="Apellido"
+                name="apellido"
+                [(ngModel)]="usuario.apellido"
+                required
+                #apellido="ngModel">
+
+        <div *ngIf="apellido.errors?.required">
+          Este campo es requerido.
+        </div>
+
       </div>
     </div>
 
@@ -31,7 +53,19 @@
 
       <input class="form-control"
               type="email"
-              placeholder="Correo electrónico">
+              placeholder="Correo electrónico"
+              name="correo"
+              [(ngModel)]="usuario.correo"
+              required
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              #correo="ngModel">
+
+      <div *ngIf="correo.errors?.required">
+        Este campo es requerido.
+      </div>
+      <div *ngIf="correo.errors?.pattern">
+        Escribe el correo correctamente
+      </div>
     </div>
   </div>
 
