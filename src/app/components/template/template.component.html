@@ -8,6 +8,7 @@
       <label class="col-2 col-form-label">Nombre</label>
       <div class="col-8">
         <input class="form-control"
+                [ngClass]="{'is-invalid': (nombre.errors?.required || nombre.errors?.minlength) && nombre.touched}"
                 type="text"
                 placeholder="Nombre"
                 name="nombre"
@@ -16,10 +17,10 @@
                 minlength="3"
                 #nombre="ngModel">
 
-        <div *ngIf="nombre.errors?.required">
+        <div *ngIf="nombre.errors?.required" class="invalid-feedback">
           Este campo es requerido.
         </div>
-        <div *ngIf="nombre.errors?.minlength">
+        <div *ngIf="nombre.errors?.minlength" class="invalid-feedback">
           Por lo menos {{nombre.errors.minlength.requiredLength}} caracteres.
         </div>
 
@@ -72,7 +73,9 @@
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-8">
-      <button type="submit" class="btn btn-outline-primary">
+      <button type="submit" 
+              class="btn btn-outline-primary"
+              [disabled]="!forma.valid">
         Guardar
       </button>
     </div>
