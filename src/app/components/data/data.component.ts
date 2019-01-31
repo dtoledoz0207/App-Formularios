@@ -10,7 +10,7 @@ export class DataComponent {
 
   forma:FormGroup;
 
-  usuario:Object = {
+  usuario:any = {
     nombreCompleto: {
       nombre: 'Alejandro',
       apellido: 'Zuñiga'
@@ -39,7 +39,9 @@ export class DataComponent {
                                       Validators.required, 
                                       Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")]
                                 )
-    })
+    });
+
+    this.forma.setValue(this.usuario);
 
    }
 
@@ -47,6 +49,17 @@ export class DataComponent {
    guardarCambios(){
      console.log(this.forma.value);
      console.log(this.forma);
+   }
+
+
+   reset(){
+    this.forma.reset({
+      nombreCompleto: {
+        nombre: "",
+        apellido: ""
+      },
+      correo: ""
+    });
    }
 
 
