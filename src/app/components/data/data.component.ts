@@ -33,7 +33,7 @@ export class DataComponent {
             Validators.minLength(3)
           ]
         ),
-        'apellido': new FormControl('', Validators.required),
+        'apellido': new FormControl('', [Validators.required, this.noHerrera]),
 
       }), 
       'correo': new FormControl('', [
@@ -42,10 +42,14 @@ export class DataComponent {
                                 ]),
       'pasatiempos': new FormArray([
         new FormControl('Correr', Validators.required)
-      ])
+      ]),
+      'password1': new FormControl('', Validators.required),
+      'password2': new FormControl() 
     });
 
     //this.forma.setValue(this.usuario);
+
+    this.forma.controls['password2'].setValidators([Validators.required, this.noIgual.bind(this.forma)])
 
    }
 
@@ -72,6 +76,30 @@ export class DataComponent {
         new FormControl('', Validators.required)
      )
    }
+
+
+   noHerrera(control: FormControl): {[s:string]:boolean}{
+     if(control.value === "herrera"){
+       return {
+         noherrea:true
+       }
+     }else{
+       return null;
+     }
+   }
+
+   noIgual(control: FormControl): {[s:string]:boolean}{
+
+    let forma:any = this;
+
+    if(control.value !== forma.controls['password1'].value){
+      return {
+        noiguales:true
+      }
+    }else{
+      return null;
+    }
+  }
 
 
 }
